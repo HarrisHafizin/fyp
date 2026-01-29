@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Architecture Diagram - Rugby Scouting GA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+        }
+        
+        .diagram-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #1a365d;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 14px;
+            font-weight: normal;
+        }
+        
+        .architecture {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .layer {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+            background: linear-gradient(135deg, #fff 0%, #f7fafc 100%);
+        }
+        
+        .layer-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .layer-number {
+            background: #C41E3A;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .layer-name {
+            font-weight: bold;
+            color: #2d3748;
+            font-size: 16px;
+        }
+        
+        .layer-file {
+            color: #718096;
+            font-size: 12px;
+            font-family: monospace;
+            background: #edf2f7;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        .layer-content {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .component {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            min-width: 140px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .component-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .component-name {
+            font-size: 12px;
+            color: #4a5568;
+            font-weight: 500;
+        }
+        
+        .arrow-down {
+            text-align: center;
+            font-size: 30px;
+            color: #C41E3A;
+            margin: 5px 0;
+        }
+        
+        /* GA Process Box */
+        .ga-process {
+            background: linear-gradient(135deg, #fef3f3 0%, #fff5f5 100%);
+            border: 2px solid #C41E3A;
+        }
+        
+        .ga-steps {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .ga-step {
+            background: white;
+            border: 2px solid #C41E3A;
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-align: center;
+            min-width: 100px;
+        }
+        
+        .ga-step-number {
+            background: #C41E3A;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 0 auto 5px;
+        }
+        
+        .ga-step-name {
+            font-size: 11px;
+            color: #2d3748;
+            font-weight: 500;
+        }
+        
+        .step-arrow {
+            color: #C41E3A;
+            font-size: 20px;
+        }
+        
+        .loop-indicator {
+            position: relative;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        .loop-text {
+            background: #fef3f3;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 11px;
+            color: #C41E3A;
+            border: 1px dashed #C41E3A;
+            display: inline-block;
+        }
+        
+        /* Chromosome representation */
+        .chromosome-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+        
+        .chromosome-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .chromosome {
+            display: flex;
+            gap: 3px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .gene {
+            width: 35px;
+            height: 35px;
+            border: 2px solid #4a5568;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            background: white;
+        }
+        
+        .gene.prop { background: #fed7d7; border-color: #c53030; }
+        .gene.hooker { background: #feebc8; border-color: #c05621; }
+        .gene.lock { background: #c6f6d5; border-color: #276749; }
+        .gene.backrow { background: #bee3f8; border-color: #2b6cb0; }
+        .gene.scrum { background: #e9d8fd; border-color: #6b46c1; }
+        .gene.fly { background: #fefcbf; border-color: #975a16; }
+        .gene.centre { background: #b2f5ea; border-color: #234e52; }
+        .gene.winger { background: #fed7e2; border-color: #97266d; }
+        .gene.fullback { background: #e2e8f0; border-color: #4a5568; }
+        
+        .gene-legend {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 10px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+            border: 1px solid #999;
+        }
+        
+        /* Print/Export button */
+        .export-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 30px;
+            background: #C41E3A;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .export-btn:hover {
+            background: #a01830;
+        }
+        
+        @media print {
+            .export-btn { display: none; }
+            body { background: white; padding: 0; }
+            .diagram-container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="diagram-container" id="diagram">
+        <h1>🏉 SYSTEM ARCHITECTURE</h1>
+        <h2>Scouting Strategy Optimization for Rugby Team Using Genetic Algorithm</h2>
+        
+        <div class="architecture">
+            <!-- Layer 1: User Interface -->
+            <div class="layer">
+                <div class="layer-title">
+                    <span class="layer-number">1</span>
+                    <span class="layer-name">PRESENTATION LAYER (User Interface)</span>
+                    <span class="layer-file">📁 templates/index.html</span>
+                </div>
+                <div class="layer-content">
+                    <div class="component">
+                        <div class="component-icon">💰</div>
+                        <div class="component-name">Budget Input</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-icon">🎯</div>
+                        <div class="component-name">Strategy Selection</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-icon">🏟️</div>
+                        <div class="component-name">Game Mode<br>(7s/10s/15s)</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-icon">🔒</div>
+                        <div class="component-name">Locked Players</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-down">⬇️</div>
+            
+            <!-- Layer 2: Backend -->
+            <div class="layer">
+                <div class="layer-title">
+                    <span class="layer-number">2</span>
+                    <span class="layer-name">APPLICATION LAYER (Flask Backend)</span>
+                    <span class="layer-file">📁 app.py</span>
+                </div>
+                <div class="layer-content">
+                    <div class="component">
+                        <div class="component-icon">🌐</div>
+                        <div class="component-name">GET /</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-icon">⚡</div>
+                        <div class="component-name">POST /api/optimize</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-icon">👥</div>
+                        <div class="component-name">GET /api/players</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-icon">📋</div>
+                        <div class="component-name">GET /api/strategies</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-down">⬇️</div>
+            
+            <!-- Layer 3: Data -->
+            <div class="layer">
+                <div class="layer-title">
+                    <span class="layer-number">3</span>
+                    <span class="layer-name">DATA LAYER (Preprocessing)</span>
+                    <span class="layer-file">📁 Statistic on best rugby players 2023-2024.csv</span>
+                </div>
+                <div class="layer-content">
+                    <div class="component">
+                        <div class="component-icon">📄</div>
+                        <div class="component-name">CSV Loading<br>(Encoding)</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-icon">🧹</div>
+                        <div class="component-name">Salary Cleaning</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-icon">🔄</div>
+                        <div class="component-name">Position<br>Normalization</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-icon">📊</div>
+                        <div class="component-name">Performance<br>Score Calc</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-down">⬇️</div>
+            
+            <!-- Layer 4: Strategy -->
+            <div class="layer">
+                <div class="layer-title">
+                    <span class="layer-number">4</span>
+                    <span class="layer-name">STRATEGY CONFIGURATION</span>
+                    <span class="layer-file">📁 strategies.py</span>
+                </div>
+                <div class="layer-content">
+                    <div class="component">
+                        <div class="component-icon">🏈</div>
+                        <div class="component-name">Basic Play<br>(Scrum, Lineout)</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-icon">🎮</div>
+                        <div class="component-name">Tactical Play<br>(Pick & Go)</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-icon">⚔️</div>
+                        <div class="component-name">Contingency<br>(Counter Attack)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-down">⬇️</div>
+            
+            <!-- Layer 5: GA Engine -->
+            <div class="layer ga-process">
+                <div class="layer-title">
+                    <span class="layer-number">5</span>
+                    <span class="layer-name">🧬 GENETIC ALGORITHM ENGINE</span>
+                    <span class="layer-file">📁 app.py (RugbyScoutGA class)</span>
+                </div>
+                <div class="ga-steps">
+                    <div class="ga-step">
+                        <div class="ga-step-number">1</div>
+                        <div class="ga-step-name">Initialize<br>Population</div>
+                    </div>
+                    <span class="step-arrow">→</span>
+                    <div class="ga-step">
+                        <div class="ga-step-number">2</div>
+                        <div class="ga-step-name">Fitness<br>Evaluation</div>
+                    </div>
+                    <span class="step-arrow">→</span>
+                    <div class="ga-step">
+                        <div class="ga-step-number">3</div>
+                        <div class="ga-step-name">Selection<br>(Top 50%)</div>
+                    </div>
+                    <span class="step-arrow">→</span>
+                    <div class="ga-step">
+                        <div class="ga-step-number">4</div>
+                        <div class="ga-step-name">Crossover<br>(Single-Point)</div>
+                    </div>
+                    <span class="step-arrow">→</span>
+                    <div class="ga-step">
+                        <div class="ga-step-number">5</div>
+                        <div class="ga-step-name">Mutation<br>(25%)</div>
+                    </div>
+                    <span class="step-arrow">→</span>
+                    <div class="ga-step">
+                        <div class="ga-step-number">6</div>
+                        <div class="ga-step-name">Repair<br>Duplicates</div>
+                    </div>
+                </div>
+                <div class="loop-indicator">
+                    <span class="loop-text">🔄 Loop for N Generations (50-100)</span>
+                </div>
+            </div>
+            
+            <div class="arrow-down">⬇️</div>
+            
+            <!-- Layer 6: Output -->
+            <div class="layer">
+                <div class="layer-title">
+                    <span class="layer-number">6</span>
+                    <span class="layer-name">OUTPUT GENERATION</span>
+                    <span class="layer-file">📁 JSON Response → index.html</span>
+                </div>
+                <div class="layer-content">
+                    <div class="component">
+                        <div class="component-icon">⭐</div>
+                        <div class="component-name">Starters List<br>(15/10/7)</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-icon">🔄</div>
+                        <div class="component-name">Reserves List</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-icon">💵</div>
+                        <div class="component-name">Salary Stats</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-icon">📈</div>
+                        <div class="component-name">Value Metrics</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chromosome Representation -->
+            <div class="chromosome-section">
+                <div class="chromosome-title">🧬 CHROMOSOME REPRESENTATION (15s Rugby - 25 Players)</div>
+                <div class="chromosome">
+                    <div class="gene prop">P1</div>
+                    <div class="gene prop">P2</div>
+                    <div class="gene prop">P3</div>
+                    <div class="gene prop">P4</div>
+                    <div class="gene hooker">H1</div>
+                    <div class="gene hooker">H2</div>
+                    <div class="gene lock">L1</div>
+                    <div class="gene lock">L2</div>
+                    <div class="gene lock">L3</div>
+                    <div class="gene backrow">B1</div>
+                    <div class="gene backrow">B2</div>
+                    <div class="gene backrow">B3</div>
+                    <div class="gene backrow">B4</div>
+                    <div class="gene backrow">B5</div>
+                    <div class="gene scrum">S1</div>
+                    <div class="gene scrum">S2</div>
+                    <div class="gene fly">F1</div>
+                    <div class="gene fly">F2</div>
+                    <div class="gene centre">C1</div>
+                    <div class="gene centre">C2</div>
+                    <div class="gene centre">C3</div>
+                    <div class="gene winger">W1</div>
+                    <div class="gene winger">W2</div>
+                    <div class="gene winger">W3</div>
+                    <div class="gene fullback">FB</div>
+                </div>
+                <div class="gene-legend">
+                    <div class="legend-item"><span class="legend-color" style="background:#fed7d7"></span>Prop (4)</div>
+                    <div class="legend-item"><span class="legend-color" style="background:#feebc8"></span>Hooker (2)</div>
+                    <div class="legend-item"><span class="legend-color" style="background:#c6f6d5"></span>Lock (3)</div>
+                    <div class="legend-item"><span class="legend-color" style="background:#bee3f8"></span>Backrow (5)</div>
+                    <div class="legend-item"><span class="legend-color" style="background:#e9d8fd"></span>Scrumhalf (2)</div>
+                    <div class="legend-item"><span class="legend-color" style="background:#fefcbf"></span>Flyhalf (2)</div>
+                    <div class="legend-item"><span class="legend-color" style="background:#b2f5ea"></span>Centre (3)</div>
+                    <div class="legend-item"><span class="legend-color" style="background:#fed7e2"></span>Winger (3)</div>
+                    <div class="legend-item"><span class="legend-color" style="background:#e2e8f0"></span>Fullback (1)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <button class="export-btn" onclick="window.print()">📷 Print / Save as PDF</button>
+    
+    <script>
+        // Instructions for saving as image:
+        // 1. Click "Print / Save as PDF" button
+        // 2. In print dialog, select "Save as PDF"
+        // 3. Or use browser's screenshot tool (F12 → Ctrl+Shift+P → "Capture full size screenshot")
+    </script>
+</body>
+</html>

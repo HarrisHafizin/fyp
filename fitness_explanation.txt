@@ -1,0 +1,49 @@
+Penjelasan Pengiraan Kecergasan (Fitness)
+
+1) Skor Prestasi Pemain (Performance_Score)
+- Formula heuristik dalam kod:
+  Performance_Score = experience
+                    + (club_try * 5)
+                    + (club_W * 3)
+                    + (club_starter * 2)
+                    - (yellow card * 10)
+                    - (red card * 20)
+- Di mana:
+  - experience = 2024 - start_career
+  - Nilai minimum dipastikan ≥ 1 untuk elakkan skor negatif
+
+2) Skor & Gaji Pasukan
+- total_score = jumlah Performance_Score untuk semua 15 pemain
+- total_salary = jumlah Salary untuk semua 15 pemain
+
+3) Penalti Gaji
+- penalty = (total_salary / budget) * SALARY_PENALTY_FACTOR
+- SALARY_PENALTY_FACTOR ialah pemboleh ubah (contoh: 50). Nilainya mengawal seberapa kuat kita menghukum pasukan yang mahal.
+
+4) Peraturan Akhir untuk Fitness
+- Jika total_salary > budget  → fitness = 0 (pasukan tidak layak)
+- Jika total_salary ≤ budget → fitness = total_score - penalty
+- Selepas itu, fitness dipastikan tidak kurang daripada 0 (fitness = max(fitness, 0))
+
+5) Contoh Pengiraan (menggunakan nilai dari run contoh):
+- total_score = 1135.00
+- total_salary = 2,945,000
+- budget = 3,000,000
+- SALARY_PENALTY_FACTOR = 50
+- penalty = (2,945,000 / 3,000,000) * 50 ≈ 49.0833
+- fitness ≈ 1135.00 − 49.0833 = 1085.9167 → dibundarkan 1085.92
+
+6) Perkara Penting & Cadangan
+- Fitness sekarang mengutamakan skor (penalti gaji hanya memberi desakan kecil). Untuk menekan gaji lebih kuat: tingkatkan SALARY_PENALTY_FACTOR.
+- Untuk memenuhi syarat "skor tertinggi, kemudian gaji paling rendah" secara tepat: gunakan pemilihan leksikografik (pilih skor maksimum dalam set penyelesaian, kemudian di antara yang berkongsi skor ambil gaji terendah) atau gunakan NSGA-II untuk dapatkan Pareto front dan pilih titik yang diinginkan.
+- `generate_budget_compliant_team()` membantu memastikan populasi awal pasukan mematuhi bajet.
+
+7) Lokasi Kod (rujukan cepat)
+- `rugby_scouting_ga.py`:
+  - `load_and_prep_data()` — pengiraan Performance_Score dan pembersihan data.
+  - `calculate_fitness()` — fungsi yang mengira fitness akhir.
+  - `SALARY_PENALTY_FACTOR` — konstanta untuk skala penalti gaji.
+  - `generate_budget_compliant_team()` — buat pasukan yang patuh bajet.
+- Skrip NSGA-II: `run_nsga2.py` dan `run_nsga2_postprocess.py` (untuk dapatkan Pareto front dan menapis penyelesaian patuh bajet).
+
+Jika anda mahu saya jadikan fail ini ke PDF atau masukkan contoh kalkulator kecil (script) untuk input nilai sendiri, beritahu saya.

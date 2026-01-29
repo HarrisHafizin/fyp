@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conceptual Framework - Rugby Scouting GA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+        }
+        
+        .diagram-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #1a365d;
+            margin-bottom: 5px;
+            font-size: 22px;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 13px;
+            font-weight: normal;
+        }
+        
+        .framework {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            gap: 20px;
+        }
+        
+        .phase {
+            flex: 1;
+            background: linear-gradient(180deg, #f7fafc 0%, #edf2f7 100%);
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .phase-header {
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 15px;
+        }
+        
+        .phase-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .phase-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2d3748;
+        }
+        
+        .phase-subtitle {
+            font-size: 11px;
+            color: #718096;
+            margin-top: 5px;
+        }
+        
+        .phase-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .phase-item {
+            background: white;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border-left: 4px solid;
+            font-size: 12px;
+        }
+        
+        .phase-input .phase-item { border-color: #4299e1; }
+        .phase-process .phase-item { border-color: #9f7aea; }
+        .phase-algorithm .phase-item { border-color: #C41E3A; }
+        .phase-output .phase-item { border-color: #48bb78; }
+        
+        .item-title {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 3px;
+        }
+        
+        .item-desc {
+            color: #718096;
+            font-size: 10px;
+        }
+        
+        .arrow-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #C41E3A;
+            padding: 0 5px;
+        }
+        
+        .relationship-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #fef5f5 0%, #fff5f5 100%);
+            border: 2px solid #C41E3A;
+            border-radius: 12px;
+        }
+        
+        .relationship-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #C41E3A;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .relationship-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .relationship-box {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 150px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .relationship-box.knapsack {
+            border: 2px solid #f6ad55;
+        }
+        
+        .relationship-box.ga {
+            border: 2px solid #9f7aea;
+        }
+        
+        .relationship-box.strategy {
+            border: 2px solid #48bb78;
+        }
+        
+        .rel-icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+        
+        .rel-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #2d3748;
+        }
+        
+        .rel-desc {
+            font-size: 10px;
+            color: #718096;
+            margin-top: 5px;
+        }
+        
+        .plus-sign {
+            font-size: 24px;
+            color: #718096;
+            font-weight: bold;
+        }
+        
+        .equals-sign {
+            font-size: 24px;
+            color: #C41E3A;
+            font-weight: bold;
+        }
+        
+        .result-box {
+            background: linear-gradient(135deg, #C41E3A, #8B0A1A);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .result-title {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .result-desc {
+            font-size: 10px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        .export-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 30px;
+            background: #C41E3A;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .export-btn:hover {
+            background: #a01830;
+        }
+        
+        @media print {
+            .export-btn { display: none; }
+            body { background: white; padding: 0; }
+            .diagram-container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="diagram-container">
+        <h1>📋 CONCEPTUAL FRAMEWORK</h1>
+        <h2>Scouting Strategy Optimization for Rugby Team Using Genetic Algorithm</h2>
+        
+        <div class="framework">
+            <!-- INPUT Phase -->
+            <div class="phase phase-input">
+                <div class="phase-header">
+                    <div class="phase-icon">📥</div>
+                    <div class="phase-title">INPUT</div>
+                    <div class="phase-subtitle">User Requirements</div>
+                </div>
+                <div class="phase-content">
+                    <div class="phase-item">
+                        <div class="item-title">💰 Budget</div>
+                        <div class="item-desc">Maximum salary cap for team</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">🎯 Strategy</div>
+                        <div class="item-desc">Playing style preferences</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">🏟️ Game Mode</div>
+                        <div class="item-desc">7s, 10s, or 15s Rugby</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">🔒 Locked Players</div>
+                        <div class="item-desc">Must-have players (optional)</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">📊 Player Database</div>
+                        <div class="item-desc">133 professional players</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-connector">➡️</div>
+            
+            <!-- PROCESS Phase -->
+            <div class="phase phase-process">
+                <div class="phase-header">
+                    <div class="phase-icon">⚙️</div>
+                    <div class="phase-title">PROCESS</div>
+                    <div class="phase-subtitle">Data Preprocessing</div>
+                </div>
+                <div class="phase-content">
+                    <div class="phase-item">
+                        <div class="item-title">🧹 Data Cleaning</div>
+                        <div class="item-desc">Remove formatting, handle missing values</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">🔄 Normalization</div>
+                        <div class="item-desc">Standardize position names</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">📈 Feature Engineering</div>
+                        <div class="item-desc">Calculate Performance Score</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">👥 Grouping</div>
+                        <div class="item-desc">Organize players by position</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">⚖️ Strategy Weights</div>
+                        <div class="item-desc">Apply fitness multipliers</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-connector">➡️</div>
+            
+            <!-- ALGORITHM Phase -->
+            <div class="phase phase-algorithm">
+                <div class="phase-header">
+                    <div class="phase-icon">🧬</div>
+                    <div class="phase-title">ALGORITHM</div>
+                    <div class="phase-subtitle">Genetic Algorithm</div>
+                </div>
+                <div class="phase-content">
+                    <div class="phase-item">
+                        <div class="item-title">1️⃣ Initialization</div>
+                        <div class="item-desc">Generate 150 random teams</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">2️⃣ Fitness Evaluation</div>
+                        <div class="item-desc">Score teams + budget check</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">3️⃣ Selection</div>
+                        <div class="item-desc">Top 50% survive</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">4️⃣ Crossover</div>
+                        <div class="item-desc">Combine parent genes</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">5️⃣ Mutation</div>
+                        <div class="item-desc">Random player swaps (25%)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-connector">➡️</div>
+            
+            <!-- OUTPUT Phase -->
+            <div class="phase phase-output">
+                <div class="phase-header">
+                    <div class="phase-icon">📤</div>
+                    <div class="phase-title">OUTPUT</div>
+                    <div class="phase-subtitle">Optimized Results</div>
+                </div>
+                <div class="phase-content">
+                    <div class="phase-item">
+                        <div class="item-title">⭐ Starting XV</div>
+                        <div class="item-desc">Best 15 players for match</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">🔄 Reserves</div>
+                        <div class="item-desc">Backup players (8-10)</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">💵 Budget Analysis</div>
+                        <div class="item-desc">Total cost & remaining</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">📊 Value Metrics</div>
+                        <div class="item-desc">Player efficiency grades</div>
+                    </div>
+                    <div class="phase-item">
+                        <div class="item-title">🏆 Team Score</div>
+                        <div class="item-desc">Overall fitness rating</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Relationship Section -->
+        <div class="relationship-section">
+            <div class="relationship-title">🔗 KEY CONCEPTS RELATIONSHIP</div>
+            <div class="relationship-content">
+                <div class="relationship-box knapsack">
+                    <div class="rel-icon">🎒</div>
+                    <div class="rel-title">Knapsack Problem</div>
+                    <div class="rel-desc">Budget = Capacity<br>Salary = Weight<br>Score = Value</div>
+                </div>
+                
+                <span class="plus-sign">+</span>
+                
+                <div class="relationship-box ga">
+                    <div class="rel-icon">🧬</div>
+                    <div class="rel-title">Genetic Algorithm</div>
+                    <div class="rel-desc">Evolution-based<br>optimization<br>technique</div>
+                </div>
+                
+                <span class="plus-sign">+</span>
+                
+                <div class="relationship-box strategy">
+                    <div class="rel-icon">🎯</div>
+                    <div class="rel-title">Rugby Strategy</div>
+                    <div class="rel-desc">Domain-specific<br>fitness weights<br>& constraints</div>
+                </div>
+                
+                <span class="equals-sign">=</span>
+                
+                <div class="result-box">
+                    <div class="rel-icon">🏉</div>
+                    <div class="result-title">OPTIMAL RUGBY TEAM</div>
+                    <div class="result-desc">Maximum performance within budget</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <button class="export-btn" onclick="window.print()">📷 Print / Save as PDF</button>
+</body>
+</html>

@@ -1,0 +1,47 @@
+# Railway Deployment Ignore
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+
+# Development files
+test_*.py
+debug_*.py
+check_*.py
+quick_test.py
+analyze_*.py
+inspect_*.py
+fix_*.py
+repair_*.py
+remove_*.py
+run_*.py
+generate_*.py
+
+# Reports and documentation (optional - remove if you want them deployed)
+Report/
+*.md
+*.pdf
+
+# CSV results (not needed for deployment)
+pareto_*.csv
+
+# Backup files
+*.bak
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

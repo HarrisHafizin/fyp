@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GA Process Flow Diagram - Rugby Scouting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+        }
+        
+        .diagram-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #1a365d;
+            margin-bottom: 5px;
+            font-size: 22px;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 25px;
+            font-size: 13px;
+            font-weight: normal;
+        }
+        
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .flow-box {
+            padding: 15px 25px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 250px;
+            font-size: 13px;
+        }
+        
+        .start-end {
+            background: linear-gradient(135deg, #C41E3A, #8B0A1A);
+            color: white;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+        
+        .process {
+            background: linear-gradient(135deg, #4299e1, #2b6cb0);
+            color: white;
+            border: none;
+        }
+        
+        .decision {
+            background: linear-gradient(135deg, #f6ad55, #dd6b20);
+            color: white;
+            transform: rotate(0deg);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            width: 180px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .decision-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .decision-yes, .decision-no {
+            font-size: 11px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .decision-yes {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .decision-no {
+            background: #fc8181;
+            color: white;
+        }
+        
+        .subprocess {
+            background: linear-gradient(135deg, #9f7aea, #6b46c1);
+            color: white;
+            border-left: 5px solid #553c9a;
+        }
+        
+        .data {
+            background: linear-gradient(135deg, #48bb78, #276749);
+            color: white;
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+            padding: 15px 35px;
+        }
+        
+        .arrow {
+            font-size: 24px;
+            color: #4a5568;
+        }
+        
+        .arrow-right {
+            transform: rotate(-90deg);
+        }
+        
+        .loop-section {
+            border: 3px dashed #C41E3A;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px 0;
+            background: #fef5f5;
+        }
+        
+        .loop-label {
+            position: relative;
+            top: -35px;
+            background: #C41E3A;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .parallel-box {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+        
+        .sub-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .annotation {
+            font-size: 10px;
+            color: #718096;
+            max-width: 200px;
+            text-align: center;
+            margin-top: -5px;
+        }
+        
+        .code-ref {
+            font-family: monospace;
+            background: rgba(0,0,0,0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .export-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 30px;
+            background: #C41E3A;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .export-btn:hover {
+            background: #a01830;
+        }
+        
+        @media print {
+            .export-btn { display: none; }
+            body { background: white; padding: 0; }
+            .diagram-container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="diagram-container">
+        <h1>🧬 GENETIC ALGORITHM PROCESS FLOW</h1>
+        <h2>Rugby Scouting Strategy Optimization System</h2>
+        
+        <div class="flowchart">
+            <!-- Start -->
+            <div class="flow-box start-end">
+                🚀 START
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <!-- Input -->
+            <div class="flow-box data">
+                📥 INPUT: Budget, Strategy, Game Mode
+                <span class="code-ref">app.py: /api/optimize</span>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <!-- Load Data -->
+            <div class="flow-box process">
+                📄 Load & Preprocess Data
+                <span class="code-ref">load_data() - Lines 185-253</span>
+            </div>
+            <div class="annotation">Clean salary, normalize positions, calculate Performance_Score</div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <!-- Initialize Population -->
+            <div class="flow-box subprocess">
+                👥 Initialize Population (150 teams)
+                <span class="code-ref">create_random_team() - Lines 254-320</span>
+            </div>
+            <div class="annotation">Each team = list of player indices respecting position structure</div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <!-- Generation Loop -->
+            <div class="loop-section">
+                <span class="loop-label">🔄 EVOLUTION LOOP (50-100 Generations)</span>
+                
+                <div class="flowchart">
+                    <!-- Fitness Evaluation -->
+                    <div class="flow-box process">
+                        📊 Evaluate Fitness (All Teams)
+                        <span class="code-ref">calculate_fitness() - Lines 322-395</span>
+                    </div>
+                    <div class="annotation">
+                        Fitness = Performance_Score + ROI_Bonus<br>
+                        ❌ If Salary > Budget → Fitness = 0
+                    </div>
+                    
+                    <div class="arrow">⬇️</div>
+                    
+                    <!-- Selection -->
+                    <div class="flow-box process">
+                        🏆 Selection (Top 50% Survive)
+                        <span class="code-ref">run() - Selection block</span>
+                    </div>
+                    <div class="annotation">Sort by fitness, keep best 75 teams as parents</div>
+                    
+                    <div class="arrow">⬇️</div>
+                    
+                    <!-- Elitism -->
+                    <div class="flow-box subprocess">
+                        ⭐ Elitism (Preserve Top 10)
+                        <span class="code-ref">elite_size = 10</span>
+                    </div>
+                    <div class="annotation">Best teams copied directly to next generation</div>
+                    
+                    <div class="arrow">⬇️</div>
+                    
+                    <!-- Crossover & Mutation -->
+                    <div class="parallel-box">
+                        <div class="sub-flow">
+                            <div class="flow-box process" style="min-width: 180px;">
+                                ✂️ Crossover
+                                <span class="code-ref">crossover()</span>
+                            </div>
+                            <div class="annotation">Single-point crossover<br>at chromosome midpoint</div>
+                        </div>
+                        
+                        <div style="font-size: 24px; margin-top: 20px;">→</div>
+                        
+                        <div class="sub-flow">
+                            <div class="flow-box process" style="min-width: 180px;">
+                                🎲 Mutation (25%)
+                                <span class="code-ref">_mutate()</span>
+                            </div>
+                            <div class="annotation">Replace player with<br>same-position alternative</div>
+                        </div>
+                    </div>
+                    
+                    <div class="arrow">⬇️</div>
+                    
+                    <!-- Repair -->
+                    <div class="flow-box subprocess">
+                        🔧 Repair (Fix Duplicates)
+                        <span class="code-ref">fix_duplicates() / repair_team()</span>
+                    </div>
+                    <div class="annotation">Remove duplicate players, maintain team integrity</div>
+                    
+                    <div class="arrow">⬇️</div>
+                    
+                    <!-- Termination Check -->
+                    <div class="decision-wrapper">
+                        <span class="decision-no">No</span>
+                        <div class="flow-box decision">
+                            <span style="font-size: 11px;">Gen < Max?</span>
+                        </div>
+                        <span class="decision-yes">Yes ↩️</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <!-- Output -->
+            <div class="flow-box data">
+                📤 OUTPUT: Best Team Found
+                <span class="code-ref">return best_ever_team</span>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <!-- Post Processing -->
+            <div class="flow-box process">
+                📋 Post-Process Results
+                <span class="code-ref">organize_starters_by_position()</span>
+            </div>
+            <div class="annotation">Separate starters/reserves, calculate value metrics</div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <!-- End -->
+            <div class="flow-box start-end">
+                🏁 END (Return JSON)
+            </div>
+        </div>
+        
+        <!-- Key Parameters -->
+        <div style="margin-top: 30px; padding: 15px; background: #f7fafc; border-radius: 8px;">
+            <h3 style="font-size: 14px; color: #2d3748; margin-bottom: 10px;">⚙️ KEY PARAMETERS</h3>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap; font-size: 12px;">
+                <div><strong>Population Size:</strong> 150</div>
+                <div><strong>Generations:</strong> 50</div>
+                <div><strong>Mutation Rate:</strong> 25%</div>
+                <div><strong>Elite Size:</strong> 10</div>
+                <div><strong>Selection:</strong> Top 50%</div>
+                <div><strong>Crossover:</strong> Single-Point</div>
+            </div>
+        </div>
+    </div>
+    
+    <button class="export-btn" onclick="window.print()">📷 Print / Save as PDF</button>
+</body>
+</html>
