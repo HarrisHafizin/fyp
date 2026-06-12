@@ -42,4 +42,4 @@ This app is ready for one-click deployment to Railway!
 
 ## 📄 License
 
-Educational project - FYP 2024/2025
+Educational project - FYP 2025/2026
